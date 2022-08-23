@@ -7,20 +7,42 @@
 // @match     	https://*.familysearch.org/*
 // ==/UserScript==
 
-
 if(window.location=="https://www.familysearch.org/search/catalog")
 {  
 
     setTimeout(function () {
-      selectPlaceName();
-    }, 700);
+      FocusOnPlaceName();
+    }, 300);
+  	setTimeout(function () {
+      selectOnline();
+    }, 2000);
+}
+else if (window.location.toString().search("https://www.familysearch.org/search/catalog/results")>-1)
+{
+      setTimeout(function () {
+      OpenChurchRecords();
+    }, 1000);
+
 }
 
-//have place name field focused after opening page
-//select "Online" as default
-function selectPlaceName()
+function FocusOnPlaceName()
 {
   document.querySelector("#placeName").focus();
+}
+
+function selectOnline()
+{
   document.getElementById("availability-online").checked=true;
 }
 
+function OpenChurchRecords()
+{
+  for (var i=3; expandGroup = document.getElementsByClassName("expand-group")[i]; i++)
+	{
+		if(expandGroup.innerHTML.search("Church records")>-1)
+    {
+      expandGroup.click();
+      break;
+    }
+  }
+}
